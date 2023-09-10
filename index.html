@@ -9,17 +9,20 @@
 
   <body>
     <div id="container-title-body">
+      <div id="container-title">
+        <h1>Sketch Game</h1>
+      </div>
 
-    <div id="container-title">
-    <h1>Sketch Game</h1>
+      <div id="container-body"></div>
     </div>
-
-   
-    <div id="container-body">
-     <h1>Testing</h1>
-    </div>
-
-    </div>
-    <script></script>
+    <script>
+      const squQty = 756;
+      const containerBody = document.querySelector("#container-body");
+      for (let i = 0; i < squQty; i++) {
+        const divs = document.createElement("div");
+        divs.classList = "squares";
+        containerBody.appendChild(divs);
+      }
+    </script>
   </body>
 </html>

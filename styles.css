@@ -2,25 +2,33 @@ body {
   background-color: aqua;
 }
 
-#container-title-body{
-    margin: 0px;
-    padding: 0px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
+#container-title-body {
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #container-title {
-   
-    color: red;
-    font-size: 20px;
-
+  color: red;
 }
 
-#container-body{
-border: 3px solid red;
-
+#container-body {
+  min-width: 486px;
+  min-height: 500px;
+  max-width: 486px;
+  max-height: 500px;
+  display: flex;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  justify-content: safe;
+  border: 10px solid green;
 }
 
-
+.squares {
+  background-color: white;
+  border: 1px solid black;
+  width: 16px;
+  height: 16px;
+}
