@@ -23,6 +23,43 @@
         divs.classList = "squares";
         containerBody.appendChild(divs);
       }
+
+      const squares = document.querySelectorAll(".squares");
+
+      let change = true;
+
+      let blackness = 110;
+
+      function changeColour() {
+        let randomColor = Math.floor(Math.random() * 361);
+
+        if (change === true) {
+          blackness = blackness - 10;
+          console.log(blackness);
+          if (blackness < 10) {
+            change = false;
+          }
+        }
+
+        if (change === false) {
+          blackness = blackness + 10;
+          console.log(blackness);
+          console.log("love");
+          if (blackness > 100) {
+            change = true;
+          }
+        }
+
+        //console.log(this.classList.value);
+        //console.log('working');
+        //this.style.backgroundColor = `hsl(${randomColor}, 100%, 50%)`;
+        //this.style.backgroundColor = 'black';
+        this.style.backgroundColor = `hwb(0 ${blackness}% 100%)`;
+      }
+
+      squares.forEach((square) =>
+        square.addEventListener("mouseover", changeColour)
+      );
     </script>
   </body>
 </html>
