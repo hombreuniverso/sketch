@@ -2,7 +2,7 @@ body {
   background-color: aqua;
 }
 
-#container-title-body {
+#container-title-body-controls {
   margin: 0px;
   padding: 0px;
   display: flex;
@@ -13,6 +13,11 @@ body {
 #container-title {
   color: red;
 }
+
+#container-controls{
+  margin-top: 0px;
+  margin-bottom: 10px;
+  }
 
 #container-body {
   min-width: 486px;
@@ -31,5 +36,4 @@ body {
   border: 1px solid black;
   width: 16px;
   height: 16px;
-  color: hsl(0, 0%, 0%);
 }

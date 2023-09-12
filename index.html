@@ -8,53 +8,95 @@
   </head>
 
   <body>
-    <div id="container-title-body">
+    <div id="container-title-body-controls">
       <div id="container-title">
         <h1>Sketch Game</h1>
       </div>
 
+      <div id="container-controls">
+        <button id="random-colours">Random Colours</button>
+        <button id="degrees-of-black">Degrees of Black</button>
+        <button id="black">Black</button>
+      </div>
+
       <div id="container-body"></div>
     </div>
+
     <script>
+      //Create squares
       const squQty = 756;
+
       const containerBody = document.querySelector("#container-body");
       for (let i = 0; i < squQty; i++) {
         const divs = document.createElement("div");
-        divs.classList = "squares";
+        divs.className = "squares";
         containerBody.appendChild(divs);
       }
 
       const squares = document.querySelectorAll(".squares");
+      const btns = document.querySelectorAll("button");
 
-      let change = true;
+      //Switches to turn colours on and off
+      let blackSwitch = true;
+      let randomColourSwitch = false;
+      let degreesOfBlackSwitch = false;
+
+      function updateBtns() {
+        if (this.id === "random-colours") {
+          randomColourSwitch = true;
+          blackSwitch = false;
+          degreesOfBlackSwitch = false;
+        } else if (this.id === "degrees-of-black") {
+          randomColourSwitch = false;
+          blackSwitch = false;
+          degreesOfBlackSwitch = true;
+        } else {
+          randomColourSwitch = false;
+          blackSwitch = true;
+          degreesOfBlackSwitch = false;
+        }
+      }
+      btns.forEach((btn) => btn.addEventListener("click", updateBtns));
+
+      let changeBlackness = true;
 
       let blackness = 110;
 
-      function changeColour() {
-        let randomColor = Math.floor(Math.random() * 361);
+      function changeColour(e) {
+        //Default colour is black
+        // this.style.backgroundColor = "black";
 
-        if (change === true) {
-          blackness = blackness - 10;
-          console.log(blackness);
-          if (blackness < 10) {
-            change = false;
-          }
+        //Random Colours
+        if (randomColourSwitch) {
+          randomColour = Math.floor(Math.random() * 361);
+          console.log(this);
+          e.target.style.backgroundColor = `hsl(${randomColour}, 100%, 50%)`;
+          //this.setAttribute('style', 'background-color: red');
         }
 
-        if (change === false) {
-          blackness = blackness + 10;
-          console.log(blackness);
-          console.log("love");
-          if (blackness > 100) {
-            change = true;
+        //Degrees of Blackness
+        if (degreesOfBlackSwitch) {
+          if (changeBlackness === true) {
+            blackness = blackness - 10;
+            //console.log(blackness);
+            if (blackness < 10) {
+              changeBlackness = false;
+            }
           }
+
+          if (changeBlackness === false) {
+            blackness = blackness + 10;
+            // console.log(blackness);
+            if (blackness > 100) {
+              changeBlackness = true;
+            }
+          }
+          this.style.backgroundColor = `hwb(0 ${blackness}% 100%)`;
         }
 
-        //console.log(this.classList.value);
-        //console.log('working');
-        //this.style.backgroundColor = `hsl(${randomColor}, 100%, 50%)`;
-        //this.style.backgroundColor = 'black';
-        this.style.backgroundColor = `hwb(0 ${blackness}% 100%)`;
+        if (blackSwitch) {
+          this.style.backgroundColor = "black";
+        }
       }
 
       squares.forEach((square) =>
