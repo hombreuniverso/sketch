@@ -8,23 +8,32 @@
   </head>
 
   <body>
-    <div id="container-title-body-controls">
-      <div id="container-title">
-        <h1>Sketch Game</h1>
-      </div>
+    <div id="container-main">
+      <div id="container-title-body-controls">
+        <div id="container-title">
+          <h1>Sketch Game</h1>
+        </div>
 
-      <div id="container-controls">
-        <button id="random-colours">Random Colours</button>
-        <button id="degrees-of-black">Degrees of Black</button>
-        <button id="black">Black</button>
-      </div>
+        <div id="container-controls">
+          <button id="random-colours">Random Colours</button>
+          <button id="degrees-of-black">Degrees of Black</button>
+          <button id="black">Black</button>
+          <button id="white">White</button>
+        </div>
 
-      <div id="container-body"></div>
+        <div id="container-body"></div>
+      </div>
     </div>
 
     <script>
-      //Create squares
-      const squQty = 756;
+      //Create square variables
+      const width = 500;
+      const height = 500;
+      const areaFull = width * height;
+      const squQty = 1024;
+      const areaOne = areaFull / squQty;
+      const w = Math.sqrt(areaOne);
+      const h = Math.sqrt(areaOne);
 
       const containerBody = document.querySelector("#container-body");
       for (let i = 0; i < squQty; i++) {
@@ -37,23 +46,33 @@
       const btns = document.querySelectorAll("button");
 
       //Switches to turn colours on and off
+      //Default colour is black
       let blackSwitch = true;
       let randomColourSwitch = false;
       let degreesOfBlackSwitch = false;
+      let whiteSwitch = false;
 
       function updateBtns() {
         if (this.id === "random-colours") {
           randomColourSwitch = true;
           blackSwitch = false;
           degreesOfBlackSwitch = false;
+          whiteSwitch = false;
         } else if (this.id === "degrees-of-black") {
           randomColourSwitch = false;
           blackSwitch = false;
           degreesOfBlackSwitch = true;
-        } else {
+          whiteSwitch = false;
+        } else if (this.id === "black") {
           randomColourSwitch = false;
           blackSwitch = true;
           degreesOfBlackSwitch = false;
+          whiteSwitch = false;
+        } else if (this.id === "white") {
+          randomColourSwitch = false;
+          blackSwitch = false;
+          degreesOfBlackSwitch = false;
+          whiteSwitch = true;
         }
       }
       btns.forEach((btn) => btn.addEventListener("click", updateBtns));
@@ -63,13 +82,10 @@
       let blackness = 110;
 
       function changeColour(e) {
-        //Default colour is black
-        // this.style.backgroundColor = "black";
-
+      
         //Random Colours
         if (randomColourSwitch) {
           randomColour = Math.floor(Math.random() * 361);
-          console.log(this);
           e.target.style.backgroundColor = `hsl(${randomColour}, 100%, 50%)`;
           //this.setAttribute('style', 'background-color: red');
         }
@@ -78,7 +94,6 @@
         if (degreesOfBlackSwitch) {
           if (changeBlackness === true) {
             blackness = blackness - 10;
-            //console.log(blackness);
             if (blackness < 10) {
               changeBlackness = false;
             }
@@ -86,22 +101,27 @@
 
           if (changeBlackness === false) {
             blackness = blackness + 10;
-            // console.log(blackness);
             if (blackness > 100) {
               changeBlackness = true;
             }
           }
           this.style.backgroundColor = `hwb(0 ${blackness}% 100%)`;
         }
-
+        //Black switch
         if (blackSwitch) {
           this.style.backgroundColor = "black";
         }
+        //White switch
+        if (whiteSwitch) {
+          this.style.backgroundColor = "white";
+        }
       }
 
-      squares.forEach((square) =>
-        square.addEventListener("mouseover", changeColour)
-      );
+      squares.forEach((square) => {
+        square.style.width = `${w}px`;
+        square.style.height = `${h}px`;
+        square.addEventListener("mouseover", changeColour);
+      });
     </script>
   </body>
 </html>
