@@ -15,9 +15,10 @@
         </div>
 
         <div id="container-controls">
+          <button id="number-of-squares">Number of Squares</button>
           <button id="random-colours">Random Colours</button>
           <button id="degrees-of-black">Degrees of Black</button>
-          <button id="black">Black</button>
+          <button id="black">Black</button>          
           <button id="white">White</button>
         </div>
 
@@ -25,12 +26,42 @@
       </div>
     </div>
 
+
     <script>
+      //Choose number of squares
+      let squQty = 1;
+      
+      function getSquQty() {        
+      squQty = prompt("Type a number between 1 to 100", "");
+
+        //Use if cancel prompt
+        if(squQty === null){
+          alert('You cancelled.');
+        }
+        //Is not a number
+        else if (isNaN(squQty)) {
+          alert("Please type a number");
+          getSquQty();
+        }
+        //Is not between 1 and 100
+        else if(squQty < 1 || squQty > 100 ){
+          alert('Please type a number between 1 and 100');
+          getSquQty();
+        }
+        //Turn number into string and round
+        else{
+          squQty = Math.round((squQty));
+        }
+
+      }
+
+      getSquQty();
+
       //Create square variables
       const width = 500;
       const height = 500;
       const areaFull = width * height;
-      const squQty = 1024;
+
       const areaOne = areaFull / squQty;
       const w = Math.sqrt(areaOne);
       const h = Math.sqrt(areaOne);
@@ -73,8 +104,10 @@
           blackSwitch = false;
           degreesOfBlackSwitch = false;
           whiteSwitch = true;
-        }
+        }else if(this.id === 'number-of-squares'){
+          getSquQty();
       }
+    }
       btns.forEach((btn) => btn.addEventListener("click", updateBtns));
 
       let changeBlackness = true;
@@ -82,7 +115,6 @@
       let blackness = 110;
 
       function changeColour(e) {
-      
         //Random Colours
         if (randomColourSwitch) {
           randomColour = Math.floor(Math.random() * 361);
