@@ -1,3 +1,7 @@
+:root{
+  --square-quantity: 1;
+}
+
 body {
   background-color: aqua;
   display: flex;
@@ -23,12 +27,50 @@ body {
   color: red;
 }
 
+.range-container{
+display: flex;
+align-items: center;
+flex-direction: column;
+}
+
+
+input{
+  width: 200px;
+accent-color: red;
+ 
+}
+
+label{
+  font-size: 20px;
+  color: red;
+  font-weight: bold;
+}
+
+.tooltip-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+   border: 0;
+   width: 40px;
+   height: 25px;
+
+}
+
+.tooltip-squares{
+  display: none;
+  color: black;
+  font-size: 25px;
+  font-weight: bold;
+  
+}
+
 #container-controls {
   display: flex;
-  margin-top: 0px;
+  margin-top: 30px;
   margin-bottom: 20px;
   gap: 20px;
 }
+
 
 button {
   text-decoration: none;

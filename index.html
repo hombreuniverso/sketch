@@ -14,11 +14,27 @@
           <h1>Sketch Game</h1>
         </div>
 
+        <div class="range-container">
+          <label for="square-quantity">Number of Squares</label>
+          <div class="tooltip-container">
+            <span class="tooltip-squares"></span>
+          </div>
+          <input
+            type="range"
+            id="square-quantity"
+            name="square-quantity"
+            title="1"
+            min="1"
+            max="100"
+            value="1"
+          />
+        </div>
+
         <div id="container-controls">
           <button id="number-of-squares">Number of Squares</button>
           <button id="random-colours">Random Colours</button>
           <button id="degrees-of-black">Degrees of Black</button>
-          <button id="black">Black</button>          
+          <button id="black">Black</button>
           <button id="white">White</button>
         </div>
 
@@ -26,36 +42,103 @@
       </div>
     </div>
 
-
     <script>
       //Choose number of squares
-      let squQty = 1;
-      
-      function getSquQty() {        
-      squQty = prompt("Type a number between 1 to 100", "");
 
-        //Use if cancel prompt
-        if(squQty === null){
-          alert('You cancelled.');
+      //Default number of squares
+      let squareQtyElm = document.querySelector(":root");
+      let squareQty = getComputedStyle(squareQtyElm);
+      squQty = squareQty.getPropertyValue("--square-quantity");
+
+      const tooltipSquares = document.querySelector(".tooltip-squares");
+
+      function updateSquares(e) {
+        if (!isUpdating) {
+          return;
         }
-        //Is not a number
-        else if (isNaN(squQty)) {
-          alert("Please type a number");
-          getSquQty();
-        }
-        //Is not between 1 and 100
-        else if(squQty < 1 || squQty > 100 ){
-          alert('Please type a number between 1 and 100');
-          getSquQty();
-        }
-        //Turn number into string and round
-        else{
-          squQty = Math.round((squQty));
+        console.log(e.type);
+        //Create square variables
+        const width = 500;
+        const height = 500;
+        const areaFull = width * height;
+
+        const areaOne = areaFull / this.value;
+        const w = Math.sqrt(areaOne);
+        const h = Math.sqrt(areaOne);
+
+        //Clear divs before redrawing
+        containerBody.innerHTML = "";
+
+        //console.log(this.name)
+        document
+          .getElementById(this.name)
+          .setAttribute("title", `${this.value}`);
+
+        tooltipSquares.textContent = `${this.value}`;
+
+        tooltipSquares.style.display = "contents";
+
+        for (let i = 0; i < this.value; i++) {
+          const divs = document.createElement("div");
+          divs.className = " squares";
+          containerBody.appendChild(divs);
         }
 
+        const squares = document.querySelectorAll(".squares");
+
+        squares.forEach((square) => {
+          square.style.width = `${w}px`;
+          square.style.height = `${h}px`;
+          square.addEventListener("mouseover", changeColour);
+        });
       }
 
-      getSquQty();
+      let isUpdating = false;
+      const range = document.querySelector("input");
+      /*Mousemove calls updateSquares but nothing happens because
+        updateSquares returns because of switch "!isUpdating"
+        Thus mousedown is what turns on isUpdating causing
+        updateSquares to function*/
+      range.addEventListener("mousemove", updateSquares);
+
+      range.addEventListener("mouseover", () => (isUpdating = false));
+      range.addEventListener("mousedown", () => (isUpdating = true));
+
+      
+        squQty = prompt("Type a number between 1 to 100", "");
+
+        //Use if cancel prompt
+        if (squQty === null) {
+          alert("You cancelled.");
+          
+        }else{
+        //Is not a number
+        while (isNaN(squQty)) {
+          alert("Please type a number");
+          //getSquQty();
+          squQty = prompt("Type a number between 1 to 100", "");
+       if(squQty === null){
+        alert("You cncelled.")
+        
+       }
+
+        }
+        //Is not between 1 and 100
+        while (squQty < 0 || squQty > 100) {
+          //alert("Please type a number between 1 and 100");
+          squQty = prompt("Please type a number between 1 to 100", "");
+          if (squQty === null) {
+          alert("You cancelled.");
+          squQty = 0;
+        }
+        }
+      }
+        //Turn number into string and round        
+          squQty = Math.round(squQty);
+        
+      tooltipSquares.textContent = squQty;
+      tooltipSquares.style.display = "contents";
+      range.setAttribute("value", squQty);
 
       //Create square variables
       const width = 500;
@@ -104,10 +187,10 @@
           blackSwitch = false;
           degreesOfBlackSwitch = false;
           whiteSwitch = true;
-        }else if(this.id === 'number-of-squares'){
+        } else if (this.id === "number-of-squares") {
           location.reload();
+        }
       }
-    }
       btns.forEach((btn) => btn.addEventListener("click", updateBtns));
 
       let changeBlackness = true;
