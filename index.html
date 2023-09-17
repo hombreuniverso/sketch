@@ -56,7 +56,6 @@
         if (!isUpdating) {
           return;
         }
-        console.log(e.type);
         //Create square variables
         const width = 500;
         const height = 500;
@@ -101,44 +100,35 @@
         updateSquares to function*/
       range.addEventListener("mousemove", updateSquares);
 
-      range.addEventListener("mouseover", () => (isUpdating = false));
+     // range.addEventListener("mouseover", () => (isUpdating = false));
       range.addEventListener("mousedown", () => (isUpdating = true));
 
-      
+      squQty = prompt("Type a number between 1 to 100", "");
+
+      //Checking number prompt
+/*
+      //Use if cancel prompt
+      if (squQty === null) {
+        alert("You cancelled.");
+      }
+*/
+      //Is not a number or not betwen 1 and 100
+      while (isNaN(squQty) || (squQty < 1 || squQty > 100)) {
         squQty = prompt("Type a number between 1 to 100", "");
-
-        //Use if cancel prompt
-        if (squQty === null) {
-          alert("You cancelled.");
-          
-        }else{
-        //Is not a number
-        while (isNaN(squQty)) {
-          alert("Please type a number");
-          //getSquQty();
-          squQty = prompt("Type a number between 1 to 100", "");
-       if(squQty === null){
-        alert("You cncelled.")
-        
-       }
-
-        }
-        //Is not between 1 and 100
-        while (squQty < 0 || squQty > 100) {
-          //alert("Please type a number between 1 and 100");
-          squQty = prompt("Please type a number between 1 to 100", "");
-          if (squQty === null) {
-          alert("You cancelled.");
+        if(squQty === null ){
           squQty = 0;
-        }
+          break;
         }
       }
-        //Turn number into string and round        
-          squQty = Math.round(squQty);
-        
+    
+
+      //Turn number into string and round
+      squQty = Math.round(squQty);
+
       tooltipSquares.textContent = squQty;
       tooltipSquares.style.display = "contents";
       range.setAttribute("value", squQty);
+      range.setAttribute("title", squQty);
 
       //Create square variables
       const width = 500;
